@@ -8,5 +8,8 @@ import java.util.List;
  * @author Nightnessss 2019/5/17 20:33
  */
 public interface OrderService {
-    List<Orders> findAll();
+    public List<Orders> getAllOrders();
+
+    public void creatOrder();
+
 }

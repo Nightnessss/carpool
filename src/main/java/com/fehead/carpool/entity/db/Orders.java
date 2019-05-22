@@ -13,54 +13,69 @@ public class Orders {
     @Id
     @GeneratedValue
     @Column(name = "order_id")
-    private int orderId;
+    private Integer orderId;
+    @Column(name = "order_num")
+    private String orderNum;
     @Column(name = "user_id")
-    private int userId;
+    private Integer userId;
     @Column(name = "starting_point_id")
-    private int startingPointId;
+    private Integer startingPointId;
     @Column(name = "ending_point_id")
-    private int endingPointId;
+    private Integer endingPointId;
     @Column(name = "departure_time")
     private Timestamp departureTime;
     @Column(name = "time_tolerance")
-    private int timeTolerance;
+    private Integer timeTolerance;
+    // 已有成员人数
     @Column(name = "already_number")
-    private int alreadyNumber;
+    private Integer alreadyNumber;
+    // 最多成员人数
     @Column(name = "max_number")
-    private int maxNumber;
+    private Integer maxNumber;
+    // 备注
     @Column(name = "note")
     private String note;
+    // 约单状态（1.等待2.进行3.结束）
+    @Column(name = "status")
+    private Integer status;
 
-
-    public int getOrderId() {
+    public Integer getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(int orderId) {
+    public void setOrderId(Integer orderId) {
         this.orderId = orderId;
     }
 
-    public int getUserId() {
+    public String getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(String orderNum) {
+        this.orderNum = orderNum;
+    }
+
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public int getStartingPointId() {
+    public Integer getStartingPointId() {
         return startingPointId;
     }
 
-    public void setStartingPointId(int startingPointId) {
+    public void setStartingPointId(Integer startingPointId) {
         this.startingPointId = startingPointId;
     }
 
-    public int getEndingPointId() {
+    public Integer getEndingPointId() {
         return endingPointId;
     }
 
-    public void setEndingPointId(int endingPointId) {
+    public void setEndingPointId(Integer endingPointId) {
         this.endingPointId = endingPointId;
     }
 
@@ -72,27 +87,27 @@ public class Orders {
         this.departureTime = departureTime;
     }
 
-    public int getTimeTolerance() {
+    public Integer getTimeTolerance() {
         return timeTolerance;
     }
 
-    public void setTimeTolerance(int timeTolerance) {
+    public void setTimeTolerance(Integer timeTolerance) {
         this.timeTolerance = timeTolerance;
     }
 
-    public int getAlreadyNumber() {
+    public Integer getAlreadyNumber() {
         return alreadyNumber;
     }
 
-    public void setAlreadyNumber(int alreadyNumber) {
+    public void setAlreadyNumber(Integer alreadyNumber) {
         this.alreadyNumber = alreadyNumber;
     }
 
-    public int getMaxNumber() {
+    public Integer getMaxNumber() {
         return maxNumber;
     }
 
-    public void setMaxNumber(int maxNumber) {
+    public void setMaxNumber(Integer maxNumber) {
         this.maxNumber = maxNumber;
     }
 
@@ -102,5 +117,13 @@ public class Orders {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

@@ -8,46 +8,45 @@ import java.sql.Timestamp;
  */
 public class Order {
 
-    private int orderId;
-    private int userId;
-    private int startingPointId;
-    private int endingPointId;
+    private Integer orderId;
+    private Integer userId;
+    private Integer startingPointId;
+    private Integer endingPointId;
     private Timestamp departureTime;
-    private int timeTolerance;
-    private int alreadyNumber;
-    private int maxNumber;
+    private Integer timeTolerance;
+    private Integer alreadyNumber;
+    private Integer maxNumber;
     private String note;
 
-
-    public int getOrderId() {
+    public Integer getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(int orderId) {
+    public void setOrderId(Integer orderId) {
         this.orderId = orderId;
     }
 
-    public int getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
-    public int getStartingPointId() {
+    public Integer getStartingPointId() {
         return startingPointId;
     }
 
-    public void setStartingPointId(int startingPointId) {
+    public void setStartingPointId(Integer startingPointId) {
         this.startingPointId = startingPointId;
     }
 
-    public int getEndingPointId() {
+    public Integer getEndingPointId() {
         return endingPointId;
     }
 
-    public void setEndingPointId(int endingPointId) {
+    public void setEndingPointId(Integer endingPointId) {
         this.endingPointId = endingPointId;
     }
 
@@ -59,27 +58,27 @@ public class Order {
         this.departureTime = departureTime;
     }
 
-    public int getTimeTolerance() {
+    public Integer getTimeTolerance() {
         return timeTolerance;
     }
 
-    public void setTimeTolerance(int timeTolerance) {
+    public void setTimeTolerance(Integer timeTolerance) {
         this.timeTolerance = timeTolerance;
     }
 
-    public int getAlreadyNumber() {
+    public Integer getAlreadyNumber() {
         return alreadyNumber;
     }
 
-    public void setAlreadyNumber(int alreadyNumber) {
+    public void setAlreadyNumber(Integer alreadyNumber) {
         this.alreadyNumber = alreadyNumber;
     }
 
-    public int getMaxNumber() {
+    public Integer getMaxNumber() {
         return maxNumber;
     }
 
-    public void setMaxNumber(int maxNumber) {
+    public void setMaxNumber(Integer maxNumber) {
         this.maxNumber = maxNumber;
     }
 
