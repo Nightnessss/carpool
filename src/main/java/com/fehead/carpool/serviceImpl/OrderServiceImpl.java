@@ -42,7 +42,7 @@ public class OrderServiceImpl implements OrderService {
 
     /**
      * 获取所有约单
-     * @return
+     * @return List<OrderList>
      */
     @Override
     public List<OrderList> getAllOrders(){
@@ -56,7 +56,7 @@ public class OrderServiceImpl implements OrderService {
      * @param orders
      * @param starting
      * @param ending
-     * @return
+     * @return Orders
      */
     @Override
     public Orders createOrder(Orders orders, Address starting, Address ending) {
@@ -76,7 +76,7 @@ public class OrderServiceImpl implements OrderService {
     /**
      * 根据创建者id查找约单
      * @param userId
-     * @return
+     * @return List<OrderList>
      */
     @Override
     public List<OrderList> findOrdersByCreatorUserId(Integer userId) {
@@ -88,7 +88,7 @@ public class OrderServiceImpl implements OrderService {
     /**
      * 根据用户id查找所有加入的约单（非创建）
      * @param userId
-     * @return
+     * @return List<OrderList>
      */
     @Override
     public List<OrderList> findAttendOrdersByUserId(Integer userId) {
@@ -100,7 +100,7 @@ public class OrderServiceImpl implements OrderService {
     /**
      * 根据约单id查找约单
      * @param orderId
-     * @return
+     * @return OrderInfo
      */
     @Override
     public OrderInfo findOrderById(Integer orderId) {
@@ -109,7 +109,11 @@ public class OrderServiceImpl implements OrderService {
         return ordersToOrderInfo(orders);
     }
 
-
+    /**
+     * 将Orders中与OrderList相同的属性的值赋予OrderList
+     * @param orders
+     * @return orderList
+     */
     public OrderList convertFromDO(Orders orders){
         OrderList orderList = new OrderList();
         BeanUtils.copyProperties(orders, orderList);

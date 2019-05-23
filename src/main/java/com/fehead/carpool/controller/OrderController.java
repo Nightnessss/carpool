@@ -26,10 +26,10 @@ public class OrderController {
     /**
      * 首页
      * 获取所有约单数据
-     * @return
+     * @return List<OrderList>
      */
     @RequestMapping("/index")
-    public CommonReturnType index() {
+    public CommonReturnType getAllOrders() {
         List<OrderList> list = orderService.getAllOrders();
         return CommonReturnType.create(list);
     }
@@ -49,9 +49,10 @@ public class OrderController {
      * @param maxNumber
      * @param note
      * @param status
+     * @return Orders
      */
-    @RequestMapping("/submitOrder")
-    public CommonReturnType submitOrder(@Param("user_id") Integer userId,
+    @RequestMapping("/createOrder")
+    public CommonReturnType createOrder(@Param("user_id") Integer userId,
                             @Param("starting_latitude") double startingLatitude,
                             @Param("starting_longitude") double startingLongitude,
                             @Param("starting_address") String startingAddress,
@@ -70,5 +71,38 @@ public class OrderController {
                 alreadyNumber, maxNumber, note, status);
 
         return CommonReturnType.create(orderService.createOrder(orders, starting, ending));
+    }
+
+    /**
+     * 根据创建者id查找约单
+     * @param userId
+     * @return List<OrderList>
+     */
+    @RequestMapping("/findOrdersByCreatorUserId")
+    public CommonReturnType findOrdersByCreatorUserId(@Param("user_id") Integer userId) {
+
+        return CommonReturnType.create(orderService.findOrdersByCreatorUserId(userId));
+    }
+
+    /**
+     * 根据用户id查找所有加入的约单（非创建）
+     * @param userId
+     * @return List<OrderList>
+     */
+    @RequestMapping("/findAttendOrdersByUserId")
+    public CommonReturnType findAttendOrdersByUserId(@Param("user_id") Integer userId) {
+
+        return CommonReturnType.create(orderService.findAttendOrdersByUserId(userId));
+    }
+
+    /**
+     * 根据约单id查找约单
+     * @param orderId
+     * @return OrderInfo
+     */
+    @RequestMapping("/findOrderById")
+    public CommonReturnType findOrderById(@Param("order_id") Integer orderId) {
+
+        return CommonReturnType.create(orderService.findOrderById(orderId));
     }
 }
