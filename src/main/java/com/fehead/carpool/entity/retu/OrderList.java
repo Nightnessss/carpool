@@ -6,51 +6,51 @@ import java.sql.Timestamp;
  * @author Nightnessss 2019/5/17 22:25
  */
 public class OrderList {
-    private int orderId;
-    private String initiator;
-    private String starting_name;
-    private String ending_name;
-    private int already_number;
+    private Integer orderNum;
+    private String userId;
+    private String startingName;
+    private String endingName;
+    private Integer alreadyNumber;
     private Timestamp departureTime;
 
-    public int getOrderId() {
-        return orderId;
+    public Integer getOrderId() {
+        return orderNum;
     }
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public void setOrderId(Integer orderNum) {
+        this.orderNum = orderNum;
     }
 
-    public String getInitiator() {
-        return initiator;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setInitiator(String initiator) {
-        this.initiator = initiator;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getStarting_name() {
-        return starting_name;
+    public String getStartingName() {
+        return startingName;
     }
 
-    public void setStarting_name(String starting_name) {
-        this.starting_name = starting_name;
+    public void setStartingName(String startingName) {
+        this.startingName = startingName;
     }
 
-    public String getEnding_name() {
-        return ending_name;
+    public String getEndingName() {
+        return endingName;
     }
 
-    public void setEnding_name(String ending_name) {
-        this.ending_name = ending_name;
+    public void setEndingName(String endingName) {
+        this.endingName = endingName;
     }
 
-    public int getAlready_number() {
-        return already_number;
+    public Integer getAlreadyNumber() {
+        return alreadyNumber;
     }
 
-    public void setAlready_number(int already_number) {
-        this.already_number = already_number;
+    public void setAlreadyNumber(Integer alreadyNumber) {
+        this.alreadyNumber = alreadyNumber;
     }
 
     public Timestamp getDepartureTime() {
@@ -59,17 +59,5 @@ public class OrderList {
 
     public void setDepartureTime(Timestamp departureTime) {
         this.departureTime = departureTime;
-    }
-
-    @Override
-    public String toString() {
-        return "OrderList{" +
-                "orderId=" + orderId +
-                ", initiator='" + initiator + '\'' +
-                ", starting_name='" + starting_name + '\'' +
-                ", ending_name='" + ending_name + '\'' +
-                ", already_number=" + already_number +
-                ", departureTime=" + departureTime +
-                '}';
     }
 }

@@ -1,5 +1,10 @@
 package com.fehead.carpool.entity.db;
 
+
+import com.fehead.carpool.idworker.IdWorker;
+import com.fehead.carpool.idworker.Sid;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -38,6 +43,7 @@ public class Orders {
     // 约单状态（1.等待2.进行3.结束）
     @Column(name = "status")
     private Integer status;
+
 
     public Integer getOrderId() {
         return orderId;

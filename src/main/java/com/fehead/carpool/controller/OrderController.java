@@ -1,6 +1,6 @@
 package com.fehead.carpool.controller;
 
-import com.fehead.carpool.entity.db.Orders;
+import com.fehead.carpool.entity.retu.OrderList;
 import com.fehead.carpool.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -20,8 +20,8 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
     @RequestMapping("/index")
-    public List<Orders> index() {
-        List<Orders> list = orderService.getAllOrders();
+    public List<OrderList> index() {
+        List<OrderList> list = orderService.getAllOrders();
         System.out.println("+" + list);
         return list;
     }
