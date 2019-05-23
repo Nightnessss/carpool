@@ -16,7 +16,7 @@ public class Score {
     @Column(name = "number")
     private Integer number;
     @Column(name = "score")
-    private Integer score;
+    private double score;
 
     public Integer getId() {
         return id;
@@ -34,11 +34,11 @@ public class Score {
         this.number = number;
     }
 
-    public Integer getScore() {
+    public double getScore() {
         return score;
     }
 
-    public void setScore(Integer score) {
+    public void setScore(double score) {
         this.score = score;
     }
 }

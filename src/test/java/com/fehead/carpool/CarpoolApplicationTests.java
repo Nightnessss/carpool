@@ -30,13 +30,18 @@ public class CarpoolApplicationTests {
 	@Autowired
 	private AddressRepository addressRepository;
 	@Test
-	public void contextLoads() {
+	public void createTest() {
 		Address starting = new Address(20, 30, "a");
 		Address ending = new Address(12, 13, "b");
 		Timestamp departureTime = new Timestamp(new Date().getTime());
 		Orders orders = new Orders(1, departureTime, 30,
 				1, 5, "none", 1);
 		System.out.println(orderService.createOrder(orders, starting, ending));
+	}
+
+	@Test
+	public void selectTest() {
+
 	}
 
 }

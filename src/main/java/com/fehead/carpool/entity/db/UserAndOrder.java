@@ -16,8 +16,6 @@ public class UserAndOrder {
     private Integer userId;
     @Column(name = "order_id")
     private Integer orderId;
-    @Column(name = "leader_id")
-    private Integer leaderId;
 
     public Integer getId() {
         return id;
@@ -43,11 +41,5 @@ public class UserAndOrder {
         this.orderId = orderId;
     }
 
-    public Integer getLeaderId() {
-        return leaderId;
-    }
 
-    public void setLeaderId(Integer leaderId) {
-        this.leaderId = leaderId;
-    }
 }

@@ -22,21 +22,42 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+
+    /**
+     * 首页
+     * 获取所有约单数据
+     * @return
+     */
     @RequestMapping("/index")
     public CommonReturnType index() {
         List<OrderList> list = orderService.getAllOrders();
-        System.out.println("+" + list);
         return CommonReturnType.create(list);
     }
 
+    /**
+     * 创建约单
+     * @param userId
+     * @param startingLatitude
+     * @param startingLongitude
+     * @param startingAddress
+     * @param endingLatitude
+     * @param endingLongitude
+     * @param endingAddress
+     * @param departureTime
+     * @param timeTolerance
+     * @param alreadyNumber
+     * @param maxNumber
+     * @param note
+     * @param status
+     */
     @RequestMapping("/submitOrder")
-    public void submitOrder(@Param("user_id") Integer userId,
+    public CommonReturnType submitOrder(@Param("user_id") Integer userId,
                             @Param("starting_latitude") double startingLatitude,
                             @Param("starting_longitude") double startingLongitude,
                             @Param("starting_address") String startingAddress,
                             @Param("ending_latitude") double endingLatitude,
                             @Param("ending_longitude") double endingLongitude,
-                            @Param("ending_address") String endingingAddress,
+                            @Param("ending_address") String endingAddress,
                             @Param("departure_time") Timestamp departureTime,
                             @Param("time_tolerance") Integer timeTolerance,
                             @Param("already_number") Integer alreadyNumber,
@@ -44,11 +65,10 @@ public class OrderController {
                             @Param("note") String note,
                             @Param("status") Integer status) {
         Address starting = new Address(startingLongitude, startingLatitude, startingAddress);
-        Address ending = new Address(endingLongitude, endingLatitude, endingingAddress);
+        Address ending = new Address(endingLongitude, endingLatitude, endingAddress);
         Orders orders = new Orders(userId, departureTime, timeTolerance,
                 alreadyNumber, maxNumber, note, status);
-        orderService.createOrder(orders, starting, ending);
 
-
+        return CommonReturnType.create(orderService.createOrder(orders, starting, ending));
     }
 }

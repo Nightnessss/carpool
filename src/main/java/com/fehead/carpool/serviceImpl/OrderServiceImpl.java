@@ -1,12 +1,13 @@
 package com.fehead.carpool.serviceImpl;
 
-import com.fehead.carpool.dao.AddressRepository;
-import com.fehead.carpool.dao.OrderRepository;
+import com.fehead.carpool.dao.*;
 import com.fehead.carpool.entity.db.Address;
 import com.fehead.carpool.entity.db.Orders;
+import com.fehead.carpool.entity.db.Score;
+import com.fehead.carpool.entity.db.UserAndOrder;
+import com.fehead.carpool.entity.retu.OrderInfo;
 import com.fehead.carpool.entity.retu.OrderList;
 import com.fehead.carpool.idworker.Sid;
-import com.fehead.carpool.response.CommonReturnType;
 import com.fehead.carpool.service.OrderService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,15 @@ public class OrderServiceImpl implements OrderService {
     private AddressRepository addressRepository;
 
     @Autowired
+    private UserAndOrderRepository userAndOrderRepository;
+
+    @Autowired
+    private ScoreRepository scoreRepository;
+
+    @Autowired
+    private UsersRepository usersRepository;
+
+    @Autowired
     private Sid sid;
 
     /**
@@ -36,20 +46,20 @@ public class OrderServiceImpl implements OrderService {
      */
     @Override
     public List<OrderList> getAllOrders(){
-        List<Orders> list = orderRepository.findAll();
-        List<OrderList> orderList = new ArrayList<>();
-        for(Orders o:list){
-            OrderList order =convertFromDO(o);
+        List<Orders> ordersList = orderRepository.findAll();
 
-            order.setStartingName(addressRepository.findById(o.getStartingPointId()).get().getAddressName());
-            order.setEndingName(addressRepository.findById(o.getEndingPointId()).get().getAddressName());
-            orderList.add(order);
-        }
-        return orderList;
+        return ordersToOrderList(ordersList);
     }
 
+    /**
+     * 创建约单
+     * @param orders
+     * @param starting
+     * @param ending
+     * @return
+     */
     @Override
-    public CommonReturnType createOrder(Orders orders, Address starting, Address ending) {
+    public Orders createOrder(Orders orders, Address starting, Address ending) {
 
         Integer startingId = addressRepository.save(starting).getId();
         Integer endingId = addressRepository.save(ending).getId();
@@ -60,29 +70,101 @@ public class OrderServiceImpl implements OrderService {
 
         orderRepository.save(orders);
 
-        return CommonReturnType.create(orders);
+        return orders;
     }
 
+    /**
+     * 根据创建者id查找约单
+     * @param userId
+     * @return
+     */
     @Override
-    public CommonReturnType findOrdersByCreatorUserId(Integer UserId) {
-        return null;
+    public List<OrderList> findOrdersByCreatorUserId(Integer userId) {
+        List<Orders> ordersList = orderRepository.findByUserId(userId);
+
+        return ordersToOrderList(ordersList);
     }
 
+    /**
+     * 根据用户id查找所有加入的约单（非创建）
+     * @param userId
+     * @return
+     */
     @Override
-    public CommonReturnType findAttendOrdersByUserId(Integer UserId) {
-        return null;
+    public List<OrderList> findAttendOrdersByUserId(Integer userId) {
+        List<UserAndOrder> userAndOrderList = userAndOrderRepository.findByUserId(userId);
+
+        return userAndOrderToOrderList(userAndOrderList);
     }
 
+    /**
+     * 根据约单id查找约单
+     * @param orderId
+     * @return
+     */
     @Override
-    public CommonReturnType findOrderById(Integer orderId) {
-        return null;
+    public OrderInfo findOrderById(Integer orderId) {
+        Orders orders = orderRepository.findById(orderId).get();
+
+        return ordersToOrderInfo(orders);
     }
+
 
     public OrderList convertFromDO(Orders orders){
         OrderList orderList = new OrderList();
         BeanUtils.copyProperties(orders, orderList);
         return orderList;
 
+    }
+
+    /**
+     * 将db层的Orders转换为view层的OrderList
+     * @param ordersList
+     * @return
+     */
+    public List<OrderList> ordersToOrderList(List<Orders> ordersList) {
+        List<OrderList> orderLists = new ArrayList<>();
+        for (Orders o : ordersList) {
+            OrderList order = convertFromDO(o);
+            order.setStartingName(addressRepository.findById(o.getStartingPointId()).get().getAddressName());
+            order.setEndingName(addressRepository.findById(o.getEndingPointId()).get().getAddressName());
+            orderLists.add(order);
+        }
+
+        return orderLists;
+    }
+
+    /**
+     * 将db层的UserAndOrder转换为view层的OrderList
+     * @param userAndOrderList
+     * @return
+     */
+    public List<OrderList> userAndOrderToOrderList(List<UserAndOrder> userAndOrderList) {
+
+        List<Orders> ordersList = new ArrayList<>();
+        for (UserAndOrder uao : userAndOrderList) {
+            ordersList.add(orderRepository.findById(uao.getId()).get());
+        }
+        List<OrderList> orderLists = ordersToOrderList(ordersList);
+        return orderLists;
+    }
+
+    /**
+     * 将db层的Orders转换为view层的OrderInfo
+     * @param orders
+     * @return
+     */
+    public OrderInfo ordersToOrderInfo(Orders orders) {
+        OrderInfo orderInfo = new OrderInfo();
+        BeanUtils.copyProperties(orders, orderInfo);
+        orderInfo.setStartingAddress(addressRepository.findById(orders.getStartingPointId()).get().getAddressName());
+        orderInfo.setEndingAddress(addressRepository.findById(orders.getEndingPointId()).get().getAddressName());
+
+        Score score = scoreRepository.findById(usersRepository.findById(orders.getUserId()).get().getScoreId()).get();
+        orderInfo.setScore(score.getScore());
+        orderInfo.setScoreNumber(score.getNumber());
+
+        return orderInfo;
     }
 
 }
