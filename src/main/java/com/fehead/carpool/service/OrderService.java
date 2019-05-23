@@ -1,5 +1,6 @@
 package com.fehead.carpool.service;
 
+import com.fehead.carpool.entity.db.Address;
 import com.fehead.carpool.entity.db.Orders;
 import com.fehead.carpool.entity.retu.OrderList;
 import com.fehead.carpool.response.CommonReturnType;
@@ -15,10 +16,10 @@ public interface OrderService {
     public List<OrderList> getAllOrders();
 
     @PostMapping("/order/")
-    public void creatOrder();
+    public CommonReturnType createOrder(Orders orders, Address starting, Address ending);
 
     @PostMapping("/order/")
-    public CommonReturnType findOrdersByCreaterUserId(Integer UserId);
+    public CommonReturnType findOrdersByCreatorUserId(Integer UserId);
 
     @PostMapping("/order/")
     public CommonReturnType findAttendOrdersByUserId(Integer UserId);

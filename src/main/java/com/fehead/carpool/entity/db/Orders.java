@@ -44,6 +44,16 @@ public class Orders {
     @Column(name = "status")
     private Integer status;
 
+    public Orders(Integer userId, Timestamp departureTime,
+                  Integer timeTolerance, Integer alreadyNumber, Integer maxNumber, String note, Integer status) {
+        this.userId = userId;
+        this.departureTime = departureTime;
+        this.timeTolerance = timeTolerance;
+        this.alreadyNumber = alreadyNumber;
+        this.maxNumber = maxNumber;
+        this.note = note;
+        this.status = status;
+    }
 
     public Integer getOrderId() {
         return orderId;

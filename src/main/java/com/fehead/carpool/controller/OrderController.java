@@ -1,5 +1,7 @@
 package com.fehead.carpool.controller;
 
+import com.fehead.carpool.entity.db.Address;
+import com.fehead.carpool.entity.db.Orders;
 import com.fehead.carpool.entity.retu.OrderList;
 import com.fehead.carpool.response.CommonReturnType;
 import com.fehead.carpool.service.OrderService;
@@ -28,7 +30,8 @@ public class OrderController {
     }
 
     @RequestMapping("/submitOrder")
-    public void submitOrder(@Param("starting_latitude") double startingLatitude,
+    public void submitOrder(@Param("user_id") Integer userId,
+                            @Param("starting_latitude") double startingLatitude,
                             @Param("starting_longitude") double startingLongitude,
                             @Param("starting_address") String startingAddress,
                             @Param("ending_latitude") double endingLatitude,
@@ -38,7 +41,13 @@ public class OrderController {
                             @Param("time_tolerance") Integer timeTolerance,
                             @Param("already_number") Integer alreadyNumber,
                             @Param("max_number") Integer maxNumber,
-                            @Param("note") String note) {
+                            @Param("note") String note,
+                            @Param("status") Integer status) {
+        Address starting = new Address(startingLongitude, startingLatitude, startingAddress);
+        Address ending = new Address(endingLongitude, endingLatitude, endingingAddress);
+        Orders orders = new Orders(userId, departureTime, timeTolerance,
+                alreadyNumber, maxNumber, note, status);
+        orderService.createOrder(orders, starting, ending);
 
 
     }

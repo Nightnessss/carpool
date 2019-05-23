@@ -19,6 +19,12 @@ public class Address {
     @Column(name = "address_name")
     private String addressName;
 
+    public Address(double longitude, double latitude, String addressName) {
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.addressName = addressName;
+    }
+
     public Integer getId() {
         return id;
     }

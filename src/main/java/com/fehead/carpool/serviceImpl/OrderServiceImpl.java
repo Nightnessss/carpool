@@ -2,8 +2,10 @@ package com.fehead.carpool.serviceImpl;
 
 import com.fehead.carpool.dao.AddressRepository;
 import com.fehead.carpool.dao.OrderRepository;
+import com.fehead.carpool.entity.db.Address;
 import com.fehead.carpool.entity.db.Orders;
 import com.fehead.carpool.entity.retu.OrderList;
+import com.fehead.carpool.idworker.Sid;
 import com.fehead.carpool.response.CommonReturnType;
 import com.fehead.carpool.service.OrderService;
 import org.springframework.beans.BeanUtils;
@@ -18,10 +20,15 @@ import java.util.List;
  */
 @Service
 public class OrderServiceImpl implements OrderService {
+
     @Autowired
     private OrderRepository orderRepository;
+
     @Autowired
     private AddressRepository addressRepository;
+
+    @Autowired
+    private Sid sid;
 
     /**
      * 获取所有约单
@@ -42,12 +49,22 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void creatOrder() {
+    public CommonReturnType createOrder(Orders orders, Address starting, Address ending) {
 
+        Integer startingId = addressRepository.save(starting).getId();
+        Integer endingId = addressRepository.save(ending).getId();
+        orders.setStartingPointId(startingId);
+        orders.setEndingPointId(endingId);
+        // 随机生成约单号
+        orders.setOrderNum(sid.nextShort());
+
+        orderRepository.save(orders);
+
+        return CommonReturnType.create(orders);
     }
 
     @Override
-    public CommonReturnType findOrdersByCreaterUserId(Integer UserId) {
+    public CommonReturnType findOrdersByCreatorUserId(Integer UserId) {
         return null;
     }
 
