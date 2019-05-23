@@ -6,26 +6,26 @@ import java.sql.Timestamp;
  * @author Nightnessss 2019/5/17 22:25
  */
 public class OrderList {
-    private Integer orderNum;
-    private String userId;
+    private String orderNum;
+    private Integer userId;
     private String startingName;
     private String endingName;
     private Integer alreadyNumber;
     private Timestamp departureTime;
 
-    public Integer getOrderId() {
+    public String getOrderNum() {
         return orderNum;
     }
 
-    public void setOrderId(Integer orderNum) {
+    public void setOrderNum(String orderNum) {
         this.orderNum = orderNum;
     }
 
-    public String getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 

@@ -11,10 +11,6 @@ import java.util.List;
  * @author Nightnessss 2019/5/22 22:23
  */
 @Repository
-public interface AddressRepository extends JpaRepository<Address, String> {
-
-
-    List<Address> findAllById(Iterable<String> iterable);
-
+public interface AddressRepository extends JpaRepository<Address, Integer> {
 
 }
