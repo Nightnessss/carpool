@@ -41,7 +41,16 @@ public class CarpoolApplicationTests {
 
 	@Test
 	public void selectTest() {
+		List<OrderList> orderLists = orderService.findOrdersByCreatorUserId(1);
+		for (OrderList orderList : orderLists) {
+			System.out.println(orderList.toString());
+		}
 
+	}
+
+	@Test
+	public void updateTest() {
+		orderService.setStatus(1, 3);
 	}
 
 }

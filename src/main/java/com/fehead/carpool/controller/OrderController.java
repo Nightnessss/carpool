@@ -8,6 +8,7 @@ import com.fehead.carpool.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Timestamp;
@@ -30,7 +31,7 @@ public class OrderController {
      */
     @RequestMapping("/index")
     public CommonReturnType getAllOrders() {
-        List<OrderList> list = orderService.getAllOrders();
+        List<OrderList> list = orderService.getAllOrderLists();
         return CommonReturnType.create(list);
     }
 
@@ -52,19 +53,19 @@ public class OrderController {
      * @return Orders
      */
     @RequestMapping("/createOrder")
-    public CommonReturnType createOrder(@Param("user_id") Integer userId,
-                            @Param("starting_latitude") double startingLatitude,
-                            @Param("starting_longitude") double startingLongitude,
-                            @Param("starting_address") String startingAddress,
-                            @Param("ending_latitude") double endingLatitude,
-                            @Param("ending_longitude") double endingLongitude,
-                            @Param("ending_address") String endingAddress,
-                            @Param("departure_time") Timestamp departureTime,
-                            @Param("time_tolerance") Integer timeTolerance,
-                            @Param("already_number") Integer alreadyNumber,
-                            @Param("max_number") Integer maxNumber,
-                            @Param("note") String note,
-                            @Param("status") Integer status) {
+    public CommonReturnType createOrder(@RequestParam("user_id") Integer userId,
+                            @RequestParam("starting_latitude") double startingLatitude,
+                            @RequestParam("starting_longitude") double startingLongitude,
+                            @RequestParam("starting_address") String startingAddress,
+                            @RequestParam("ending_latitude") double endingLatitude,
+                            @RequestParam("ending_longitude") double endingLongitude,
+                            @RequestParam("ending_address") String endingAddress,
+                            @RequestParam("departure_time") Timestamp departureTime,
+                            @RequestParam("time_tolerance") Integer timeTolerance,
+                            @RequestParam("already_number") Integer alreadyNumber,
+                            @RequestParam("max_number") Integer maxNumber,
+                            @RequestParam("note") String note,
+                            @RequestParam("status") Integer status) {
         Address starting = new Address(startingLongitude, startingLatitude, startingAddress);
         Address ending = new Address(endingLongitude, endingLatitude, endingAddress);
         Orders orders = new Orders(userId, departureTime, timeTolerance,
@@ -79,9 +80,9 @@ public class OrderController {
      * @return List<OrderList>
      */
     @RequestMapping("/findOrdersByCreatorUserId")
-    public CommonReturnType findOrdersByCreatorUserId(@Param("user_id") Integer userId) {
+    public CommonReturnType findOrdersByCreatorUserId(@RequestParam("user_id") Integer userId) {
 
-        return CommonReturnType.create(orderService.findOrdersByCreatorUserId(userId));
+        return CommonReturnType.create(orderService.findOrderListsByCreatorUserId(userId));
     }
 
     /**
@@ -90,9 +91,9 @@ public class OrderController {
      * @return List<OrderList>
      */
     @RequestMapping("/findAttendOrdersByUserId")
-    public CommonReturnType findAttendOrdersByUserId(@Param("user_id") Integer userId) {
+    public CommonReturnType findAttendOrdersByUserId(@RequestParam("user_id") Integer userId) {
 
-        return CommonReturnType.create(orderService.findAttendOrdersByUserId(userId));
+        return CommonReturnType.create(orderService.findAttendOrderListsByUserId(userId));
     }
 
     /**
@@ -100,9 +101,47 @@ public class OrderController {
      * @param orderId
      * @return OrderInfo
      */
-    @RequestMapping("/findOrderById")
-    public CommonReturnType findOrderById(@Param("order_id") Integer orderId) {
+    @RequestMapping("/findOrderListById")
+    public CommonReturnType findOrderById(@RequestParam("order_id") Integer orderId) {
 
-        return CommonReturnType.create(orderService.findOrderById(orderId));
+        return CommonReturnType.create(orderService.findOrderInfoById(orderId));
     }
+
+    /**
+     * 根据约单id查找Orders
+     * @param orderId
+     * @return Orders
+     */
+    @RequestMapping("/findOrdersById")
+    public CommonReturnType findOrdersById(@RequestParam("order_id") Integer orderId) {
+
+        return CommonReturnType.create(orderService.findOrdersById(orderId));
+    }
+
+    /**
+     * 根据约单号找约单id
+     * @param orderNum
+     * @return Integer
+     */
+    @RequestMapping("/findIdByOrderNum")
+    public CommonReturnType findIdByOrderNum(@RequestParam("order_num") String orderNum) {
+
+        return CommonReturnType.create(orderService.findIdByOrderNum(orderNum));
+    }
+
+    /**
+     * 设置约单状态
+     * @param orderId
+     * @param status
+     * @return void
+     */
+    @RequestMapping("/setStatus")
+    public CommonReturnType setStatus(@RequestParam("order_id") Integer orderId, @RequestParam("status") Integer status) {
+
+        orderService.setStatus(orderId, status);
+
+        return CommonReturnType.create(null);
+    }
+
+
 }

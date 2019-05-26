@@ -45,7 +45,7 @@ public class OrderServiceImpl implements OrderService {
      * @return List<OrderList>
      */
     @Override
-    public List<OrderList> getAllOrders(){
+    public List<OrderList> getAllOrderLists(){
         List<Orders> ordersList = orderRepository.findAll();
 
         return ordersToOrderList(ordersList);
@@ -67,7 +67,8 @@ public class OrderServiceImpl implements OrderService {
         orders.setEndingPointId(endingId);
         // 随机生成约单号
         orders.setOrderNum(sid.nextShort());
-
+        // 设定约单状态为等待中
+        orders.setStatus(1);
         orderRepository.save(orders);
 
         return orders;
@@ -79,7 +80,7 @@ public class OrderServiceImpl implements OrderService {
      * @return List<OrderList>
      */
     @Override
-    public List<OrderList> findOrdersByCreatorUserId(Integer userId) {
+    public List<OrderList> findOrderListsByCreatorUserId(Integer userId) {
         List<Orders> ordersList = orderRepository.findByUserId(userId);
 
         return ordersToOrderList(ordersList);
@@ -91,7 +92,7 @@ public class OrderServiceImpl implements OrderService {
      * @return List<OrderList>
      */
     @Override
-    public List<OrderList> findAttendOrdersByUserId(Integer userId) {
+    public List<OrderList> findAttendOrderListsByUserId(Integer userId) {
         List<UserAndOrder> userAndOrderList = userAndOrderRepository.findByUserId(userId);
 
         return userAndOrderToOrderList(userAndOrderList);
@@ -103,11 +104,48 @@ public class OrderServiceImpl implements OrderService {
      * @return OrderInfo
      */
     @Override
-    public OrderInfo findOrderById(Integer orderId) {
+    public OrderInfo findOrderInfoById(Integer orderId) {
         Orders orders = orderRepository.findById(orderId).get();
 
         return ordersToOrderInfo(orders);
     }
+
+    /**
+     * 根据约单id找Orders
+     * @param orderId
+     * @return Orders
+     */
+    @Override
+    public Orders findOrdersById(Integer orderId) {
+
+        return orderRepository.findById(orderId).get();
+    }
+
+    /**
+     * 根据约单号找id
+     * @param OrderNum
+     * @return Integer
+     */
+    @Override
+    public Integer findIdByOrderNum(String OrderNum) {
+
+        return orderRepository.findByOrderNum(OrderNum).getOrderId();
+    }
+
+    /**
+     * 修改约单状态
+     * @param orderId
+     * @param status
+     * @return void
+     */
+    @Override
+    public void setStatus(Integer orderId, Integer status) {
+         orderRepository.setStatus(orderId, status);
+    }
+
+
+
+    /***************************************************************/
 
     /**
      * 将Orders中与OrderList相同的属性的值赋予OrderList

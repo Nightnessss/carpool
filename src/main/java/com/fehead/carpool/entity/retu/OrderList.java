@@ -7,7 +7,7 @@ import java.sql.Timestamp;
  */
 public class OrderList {
     private String orderNum;
-    private Integer userId;
+    private String userName;
     private String startingName;
     private String endingName;
     private Integer alreadyNumber;
@@ -21,12 +21,12 @@ public class OrderList {
         this.orderNum = orderNum;
     }
 
-    public Integer getUserId() {
-        return userId;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getStartingName() {
@@ -59,5 +59,17 @@ public class OrderList {
 
     public void setDepartureTime(Timestamp departureTime) {
         this.departureTime = departureTime;
+    }
+
+    @Override
+    public String toString() {
+        return "OrderList{" +
+                "orderNum='" + orderNum + '\'' +
+                ", userName='" + userName +
+                ", startingName='" + startingName + '\'' +
+                ", endingName='" + endingName + '\'' +
+                ", alreadyNumber=" + alreadyNumber +
+                ", departureTime=" + departureTime +
+                '}';
     }
 }

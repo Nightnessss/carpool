@@ -41,5 +41,4 @@ public class UserAndOrder {
         this.orderId = orderId;
     }
 
-
 }
