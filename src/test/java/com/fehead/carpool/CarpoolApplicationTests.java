@@ -6,17 +6,16 @@ import com.fehead.carpool.entity.db.Address;
 import com.fehead.carpool.entity.db.Orders;
 import com.fehead.carpool.entity.retu.OrderList;
 import com.fehead.carpool.service.OrderService;
+import com.fehead.carpool.util.TimeUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.xml.crypto.Data;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -41,7 +40,7 @@ public class CarpoolApplicationTests {
 
 	@Test
 	public void selectTest() {
-		List<OrderList> orderLists = orderService.findOrdersByCreatorUserId(1);
+		List<OrderList> orderLists = orderService.findOrderListsByCreatorUserId(1);
 		for (OrderList orderList : orderLists) {
 			System.out.println(orderList.toString());
 		}
@@ -51,6 +50,11 @@ public class CarpoolApplicationTests {
 	@Test
 	public void updateTest() {
 		orderService.setStatus(1, 3);
+	}
+	@Test
+	public void test() {
+		Timestamp departureTime = new Timestamp(new Date().getTime());
+		System.out.println(TimeUtil.timestampToString(departureTime));
 	}
 
 }

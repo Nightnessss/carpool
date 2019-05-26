@@ -8,6 +8,7 @@ import com.fehead.carpool.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -52,7 +53,7 @@ public class OrderController {
      * @param status
      * @return Orders
      */
-    @RequestMapping("/createOrder")
+    @RequestMapping(value = "/createOrder", method = RequestMethod.POST)
     public CommonReturnType createOrder(@RequestParam("user_id") Integer userId,
                             @RequestParam("starting_latitude") double startingLatitude,
                             @RequestParam("starting_longitude") double startingLongitude,
@@ -101,7 +102,7 @@ public class OrderController {
      * @param orderId
      * @return OrderInfo
      */
-    @RequestMapping("/findOrderListById")
+    @RequestMapping("/findOrderInfoById")
     public CommonReturnType findOrderById(@RequestParam("order_id") Integer orderId) {
 
         return CommonReturnType.create(orderService.findOrderInfoById(orderId));
@@ -113,9 +114,9 @@ public class OrderController {
      * @return Orders
      */
     @RequestMapping("/findOrdersById")
-    public CommonReturnType findOrdersById(@RequestParam("order_id") Integer orderId) {
+    public Orders findOrdersById(@RequestParam("order_id") Integer orderId) {
 
-        return CommonReturnType.create(orderService.findOrdersById(orderId));
+        return orderService.findOrdersById(orderId);
     }
 
     /**

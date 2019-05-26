@@ -9,6 +9,7 @@ import com.fehead.carpool.entity.retu.OrderInfo;
 import com.fehead.carpool.entity.retu.OrderList;
 import com.fehead.carpool.idworker.Sid;
 import com.fehead.carpool.service.OrderService;
+import com.fehead.carpool.util.TimeUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private UsersRepository usersRepository;
+
+    @Autowired
+    WXUserRepository wxUserRepository;
 
     @Autowired
     private Sid sid;
@@ -168,8 +172,10 @@ public class OrderServiceImpl implements OrderService {
         List<OrderList> orderLists = new ArrayList<>();
         for (Orders o : ordersList) {
             OrderList order = convertFromDO(o);
+            order.setUserName(wxUserRepository.findById(usersRepository.getOne(o.getUserId()).getWxId()).get().getNickName());
             order.setStartingName(addressRepository.findById(o.getStartingPointId()).get().getAddressName());
             order.setEndingName(addressRepository.findById(o.getEndingPointId()).get().getAddressName());
+            order.setDepartureTime(TimeUtil.timestampToString(o.getDepartureTime()));
             orderLists.add(order);
         }
 
@@ -199,8 +205,10 @@ public class OrderServiceImpl implements OrderService {
     public OrderInfo ordersToOrderInfo(Orders orders) {
         OrderInfo orderInfo = new OrderInfo();
         BeanUtils.copyProperties(orders, orderInfo);
+        orderInfo.setNickName(wxUserRepository.findById(usersRepository.getOne(orders.getUserId()).getWxId()).get().getNickName());
         orderInfo.setStartingAddress(addressRepository.findById(orders.getStartingPointId()).get().getAddressName());
         orderInfo.setEndingAddress(addressRepository.findById(orders.getEndingPointId()).get().getAddressName());
+        orderInfo.setDepartureTime(TimeUtil.timestampToString(orders.getDepartureTime()));
 
         Score score = scoreRepository.findById(usersRepository.findById(orders.getUserId()).get().getScoreId()).get();
         orderInfo.setScore(score.getScore());

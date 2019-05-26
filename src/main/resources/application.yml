@@ -3,13 +3,11 @@ server:
   port: 8080
 
 spring:
-  # mysql配置
   datasource:
     url: jdbc:mysql://111.230.138.67:3306/carpool?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: Qq1234!@#$
     driver-class-name: com.mysql.jdbc.Driver
-  # jpa配置
   jpa:
     hibernate:
       ddl-auto: update
@@ -19,9 +17,8 @@ spring:
   application:
     name: carpool-order-service
 
-#指定注册中心地址
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://192.168.0.122:8061/eureka/
+      defaultZone: http://10.111.152.209:8061/eureka/
 

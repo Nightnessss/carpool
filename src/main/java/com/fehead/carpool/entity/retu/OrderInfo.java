@@ -8,10 +8,10 @@ import java.sql.Timestamp;
 public class OrderInfo {
     private Integer orderId;
     private String orderNum;
-    private Integer nickName;
+    private String nickName;
     private String startingAddress;
     private String endingAddress;
-    private Timestamp departureTime;
+    private String departureTime;
     private Integer timeTolerance;
     private Integer alreadyNumber;
     private Integer maxNumber;
@@ -36,11 +36,11 @@ public class OrderInfo {
         this.orderNum = orderNum;
     }
 
-    public Integer getNickName() {
+    public String getNickName() {
         return nickName;
     }
 
-    public void setNickName(Integer nickName) {
+    public void setNickName(String nickName) {
         this.nickName = nickName;
     }
 
@@ -60,11 +60,11 @@ public class OrderInfo {
         this.endingAddress = endingAddress;
     }
 
-    public Timestamp getDepartureTime() {
+    public String getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(Timestamp departureTime) {
+    public void setDepartureTime(String departureTime) {
         this.departureTime = departureTime;
     }
 

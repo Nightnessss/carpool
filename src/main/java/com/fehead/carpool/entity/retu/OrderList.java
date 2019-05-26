@@ -11,7 +11,7 @@ public class OrderList {
     private String startingName;
     private String endingName;
     private Integer alreadyNumber;
-    private Timestamp departureTime;
+    private String departureTime;
 
     public String getOrderNum() {
         return orderNum;
@@ -53,11 +53,11 @@ public class OrderList {
         this.alreadyNumber = alreadyNumber;
     }
 
-    public Timestamp getDepartureTime() {
+    public String getDepartureTime() {
         return departureTime;
     }
 
-    public void setDepartureTime(Timestamp departureTime) {
+    public void setDepartureTime(String departureTime) {
         this.departureTime = departureTime;
     }
 
