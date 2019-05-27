@@ -228,7 +228,7 @@ public class OrderServiceImpl implements OrderService {
                 for(int j=i+len;j<ordersList.size();j+=len){//元素从第二个开始
                     int k=j-len;//k为有序序列最后一位的位数
                     Orders temp = ordersList.get(j);//要插入的元素
-                    while((k <= 0) && (temp.getDepartureTime().getTime() > ordersList.get(k).getDepartureTime().getTime())){//从后往前遍历
+                    while((k >= 0) && (temp.getDepartureTime().getTime() > ordersList.get(k).getDepartureTime().getTime())){//从后往前遍历
                         ordersList.set(k + len, ordersList.get(k));
                         k-=len;//向后移动len位
                     }
