@@ -14,6 +14,16 @@ public class OrderList {
     private Integer alreadyNumber;
     private String departureTime;
 
+    public double getAvgScore() {
+        return avgScore;
+    }
+
+    public void setAvgScore(double avgScore) {
+        this.avgScore = avgScore;
+    }
+
+    private double avgScore;
+
     public Integer getOrderId() {
         return orderId;
     }
@@ -70,16 +80,17 @@ public class OrderList {
         this.departureTime = departureTime;
     }
 
-    @Override
-    public String toString() {
-        return "OrderList{" +
-                "orderId=" + orderId  +
-                ", orderNum='" + orderNum + '\'' +
-                ", userName='" + userName + '\'' +
-                ", startingName='" + startingName + '\'' +
-                ", endingName='" + endingName + '\'' +
-                ", alreadyNumber=" + alreadyNumber +
-                ", departureTime='" + departureTime + '\'' +
-                '}';
+    public OrderList() {
+    }
+
+    public OrderList(Integer orderId, String orderNum, String userName, String startingName, String endingName, Integer alreadyNumber, String departureTime, double avgScore) {
+        this.orderId = orderId;
+        this.orderNum = orderNum;
+        this.userName = userName;
+        this.startingName = startingName;
+        this.endingName = endingName;
+        this.alreadyNumber = alreadyNumber;
+        this.departureTime = departureTime;
+        this.avgScore = avgScore;
     }
 }

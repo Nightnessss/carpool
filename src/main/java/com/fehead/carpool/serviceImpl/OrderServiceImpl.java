@@ -179,6 +179,8 @@ public class OrderServiceImpl implements OrderService {
             order.setStartingName(addressRepository.findById(o.getStartingPointId()).get().getAddressName());
             order.setEndingName(addressRepository.findById(o.getEndingPointId()).get().getAddressName());
             order.setDepartureTime(TimeUtils.timestampToString(o.getDepartureTime()));
+            Score score = scoreRepository.findById(usersRepository.findById(o.getUserId()).get().getScoreId()).get();
+            order.setAvgScore(score.getScore()/score.getNumber());
             orderLists.add(order);
         }
 
