@@ -6,8 +6,9 @@ import com.fehead.carpool.entity.db.Address;
 import com.fehead.carpool.entity.db.Orders;
 import com.fehead.carpool.entity.retu.OrderList;
 import com.fehead.carpool.service.OrderService;
-import com.fehead.carpool.util.TimeUtil;
+import com.fehead.carpool.utils.TimeUtils;
 import org.junit.Test;
+import org.junit.internal.RealSystem;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -54,7 +55,10 @@ public class CarpoolApplicationTests {
 	@Test
 	public void test() {
 		Timestamp departureTime = new Timestamp(new Date().getTime());
-		System.out.println(TimeUtil.timestampToString(departureTime));
+
+		Timestamp timestamp = new Timestamp(new Date().getTime());
+		boolean res = departureTime.getTime() == timestamp.getTime();
+		System.out.println(departureTime + "\n" + timestamp + "\n" + res);
 	}
 
 }

@@ -9,11 +9,13 @@ import com.fehead.carpool.entity.retu.OrderInfo;
 import com.fehead.carpool.entity.retu.OrderList;
 import com.fehead.carpool.idworker.Sid;
 import com.fehead.carpool.service.OrderService;
-import com.fehead.carpool.util.TimeUtil;
+import com.fehead.carpool.utils.TimeUtils;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -170,12 +172,13 @@ public class OrderServiceImpl implements OrderService {
      */
     public List<OrderList> ordersToOrderList(List<Orders> ordersList) {
         List<OrderList> orderLists = new ArrayList<>();
+        ordersList = sheelSort(ordersList);
         for (Orders o : ordersList) {
             OrderList order = convertFromDO(o);
             order.setUserName(wxUserRepository.findById(usersRepository.getOne(o.getUserId()).getWxId()).get().getNickName());
             order.setStartingName(addressRepository.findById(o.getStartingPointId()).get().getAddressName());
             order.setEndingName(addressRepository.findById(o.getEndingPointId()).get().getAddressName());
-            order.setDepartureTime(TimeUtil.timestampToString(o.getDepartureTime()));
+            order.setDepartureTime(TimeUtils.timestampToString(o.getDepartureTime()));
             orderLists.add(order);
         }
 
@@ -208,13 +211,32 @@ public class OrderServiceImpl implements OrderService {
         orderInfo.setNickName(wxUserRepository.findById(usersRepository.getOne(orders.getUserId()).getWxId()).get().getNickName());
         orderInfo.setStartingAddress(addressRepository.findById(orders.getStartingPointId()).get().getAddressName());
         orderInfo.setEndingAddress(addressRepository.findById(orders.getEndingPointId()).get().getAddressName());
-        orderInfo.setDepartureTime(TimeUtil.timestampToString(orders.getDepartureTime()));
+        orderInfo.setDepartureTime(TimeUtils.timestampToString(orders.getDepartureTime()));
 
         Score score = scoreRepository.findById(usersRepository.findById(orders.getUserId()).get().getScoreId()).get();
         orderInfo.setScore(score.getScore());
         orderInfo.setScoreNumber(score.getNumber());
 
         return orderInfo;
+    }
+
+    public List<Orders> sheelSort(List<Orders> ordersList){
+        int len=ordersList.size();//单独把数组长度拿出来，提高效率
+        while(len!=0){
+            len=len/2;
+            for(int i=0;i<len;i++){//分组
+                for(int j=i+len;j<ordersList.size();j+=len){//元素从第二个开始
+                    int k=j-len;//k为有序序列最后一位的位数
+                    Orders temp = ordersList.get(j);//要插入的元素
+                    while((k <= 0) && (temp.getDepartureTime().getTime() > ordersList.get(k).getDepartureTime().getTime())){//从后往前遍历
+                        ordersList.set(k + len, ordersList.get(k));
+                        k-=len;//向后移动len位
+                    }
+                    ordersList.set(k + len, temp);
+                }
+            }
+        }
+        return ordersList;
     }
 
 }

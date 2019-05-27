@@ -6,12 +6,21 @@ import java.sql.Timestamp;
  * @author Nightnessss 2019/5/17 22:25
  */
 public class OrderList {
+    private Integer orderId;
     private String orderNum;
     private String userName;
     private String startingName;
     private String endingName;
     private Integer alreadyNumber;
     private String departureTime;
+
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
 
     public String getOrderNum() {
         return orderNum;
@@ -64,12 +73,13 @@ public class OrderList {
     @Override
     public String toString() {
         return "OrderList{" +
-                "orderNum='" + orderNum + '\'' +
-                ", userName='" + userName +
+                "orderId=" + orderId  +
+                ", orderNum='" + orderNum + '\'' +
+                ", userName='" + userName + '\'' +
                 ", startingName='" + startingName + '\'' +
                 ", endingName='" + endingName + '\'' +
                 ", alreadyNumber=" + alreadyNumber +
-                ", departureTime=" + departureTime +
+                ", departureTime='" + departureTime + '\'' +
                 '}';
     }
 }
