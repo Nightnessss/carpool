@@ -4,6 +4,7 @@ import com.fehead.carpool.entity.db.Address;
 import com.fehead.carpool.entity.db.Orders;
 import com.fehead.carpool.entity.retu.OrderList;
 import com.fehead.carpool.response.CommonReturnType;
+import com.fehead.carpool.service.ChatRoomService;
 import com.fehead.carpool.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -24,6 +25,9 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    ChatRoomService chatRoomService;
 
     /**
      * 首页

@@ -1,7 +1,5 @@
 package com.fehead.carpool.entity.retu;
 
-import java.sql.Timestamp;
-
 /**
  * @author Nightnessss 2019/5/17 22:25
  */

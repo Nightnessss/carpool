@@ -164,7 +164,6 @@ public class OrderServiceImpl implements OrderService {
         return orderList;
 
     }
-
     /**
      * 将db层的Orders转换为view层的OrderList
      * @param ordersList
@@ -196,7 +195,7 @@ public class OrderServiceImpl implements OrderService {
 
         List<Orders> ordersList = new ArrayList<>();
         for (UserAndOrder uao : userAndOrderList) {
-            ordersList.add(orderRepository.findById(uao.getId()).get());
+            ordersList.add(orderRepository.findById(uao.getOrderId()).get());
         }
         List<OrderList> orderLists = ordersToOrderList(ordersList);
         return orderLists;
